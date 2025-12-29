@@ -1,6 +1,7 @@
 import { Article } from "@shared/schema";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
 
 interface ArticleCardProps {
   article: Article;
@@ -8,12 +9,15 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, index }: ArticleCardProps) {
+  const [, setLocation] = useLocation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className="group flex flex-col bg-white rounded-2xl border border-border/50 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+      className="group flex flex-col bg-card rounded-2xl border border-border/50 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+      onClick={() => setLocation(`/article/${article.id}`)}
     >
       <div className="h-48 bg-muted relative overflow-hidden">
         {article.imageUrl ? (
@@ -28,23 +32,23 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
           </div>
         )}
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full bg-white/90 text-xs font-bold text-primary shadow-sm backdrop-blur-sm">
+          <span className="px-3 py-1 rounded-full bg-background/90 text-xs font-bold text-primary shadow-sm backdrop-blur-sm">
             {article.category}
           </span>
         </div>
       </div>
       
       <div className="flex-1 p-6 flex flex-col">
-        <h3 className="text-xl font-bold font-display text-foreground mb-2 line-clamp-2 leading-tight">
+        <h3 className="text-xl font-bold font-display text-card-foreground mb-2 line-clamp-2 leading-tight">
           {article.title}
         </h3>
         <p className="text-muted-foreground text-sm line-clamp-3 mb-6 flex-1">
           {article.excerpt}
         </p>
         
-        <button className="flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+        <div className="flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
           Baca Selengkapnya <ArrowRight className="h-4 w-4" />
-        </button>
+        </div>
       </div>
     </motion.div>
   );
