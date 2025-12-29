@@ -129,7 +129,11 @@ function RegisterForm({ register }: { register: any }) {
   function onSubmit(values: z.infer<typeof registerSchema>) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...data } = values;
-    register.mutate(data);
+    register.mutate(data, {
+      onSuccess: () => {
+        setLocation("/login");
+      }
+    });
   }
 
   return (

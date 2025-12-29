@@ -74,6 +74,7 @@ export function useAuth() {
       // Assuming the backend logs them in or we redirect to login.
       // For this app flow, we might want to automatically log them in or ask them to login.
       // Let's assume we redirect to login, but for better UX, let's treat it as success.
+      queryClient.setQueryData([api.auth.me.path], null);
       toast({
         title: "Account Created",
         description: "Please log in with your new credentials.",
