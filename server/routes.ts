@@ -165,32 +165,83 @@ async function seedDatabase() {
   if (existingArticles.length === 0) {
     const articles = [
       {
-        title: "Pentingnya Zat Besi untuk Remaja",
-        excerpt: "Mengapa zat besi sangat krusial di masa pertumbuhan?",
-        content: "Zat besi memegang peranan penting dalam pembentukan hemoglobin...",
-        category: "Nutrisi",
-        imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
-      },
-      {
         title: "5 Makanan Pencegah Anemia",
-        excerpt: "Daftar makanan super untuk melawan kurang darah.",
-        content: "Bayam, hati ayam, daging merah, dan kacang-kacangan adalah...",
-        category: "Tips Sehat",
+        excerpt: "Anemia terjadi akibat kekurangan sel darah merah atau hemoglobin, sering disebabkan oleh kurangnya zat besi, vitamin B12, folat, atau vitamin C.",
+        content: `Anemia terjadi akibat kekurangan sel darah merah atau hemoglobin, sering disebabkan oleh kurangnya zat besi, vitamin B12, folat, atau vitamin C. Mengonsumsi makanan kaya nutrisi ini secara rutin dapat mencegah anemia dengan meningkatkan produksi darah merah.
+
+Bayam
+Bayam mengandung zat besi tinggi yang esensial untuk pembentukan hemoglobin, sehingga efektif mencegah anemia. Sayuran hijau ini juga menyediakan folat dan vitamin C untuk penyerapan zat besi optimal.
+
+Daging Merah
+Daging sapi atau domba tanpa lemak kaya zat besi heme yang mudah diserap tubuh, membantu mengatasi defisiensi besi penyebab anemia utama. Konsumsi 2-3 kali seminggu direkomendasikan untuk menjaga kadar hemoglobin.
+
+Telur
+Telur menyediakan zat besi, vitamin B12, dan protein yang mendukung produksi sel darah merah. Cocok dikonsumsi harian sebagai sarapan untuk pencegahan anemia pada semua usia.
+
+Kurma
+Kurma tinggi zat besi dan mineral lain yang membentuk energi serta mencegah kelelahan akibat anemia. Buah kering ini mudah dikonsumsi sebagai camilan sehat.
+
+Brokoli
+Brokoli mengandung zat besi, vitamin C, dan folat yang meningkatkan penyerapan besi serta produksi darah merah. Sayuran ini juga mendukung sistem kekebalan tubuh pada penderita anemia.`,
+        category: "Nutrisi",
         imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80"
       },
       {
         title: "Bahaya Anemia bagi Prestasi Belajar",
-        excerpt: "Kurang darah bisa bikin nilai turun? Simak penjelasannya.",
-        content: "Anemia menyebabkan suplai oksigen ke otak berkurang, sehingga...",
+        excerpt: "Anemia merupakan kondisi kesehatan yang sering dialami remaja putri akibat kekurangan zat besi, yang mengurangi kadar hemoglobin dan pasokan oksigen ke otak.",
+        content: `Anemia merupakan kondisi kesehatan yang sering dialami remaja putri akibat kekurangan zat besi, yang mengurangi kadar hemoglobin dan pasokan oksigen ke otak. Kondisi ini mengganggu fungsi kognitif seperti konsentrasi dan daya ingat, sehingga menurunkan prestasi belajar secara signifikan.
+
+Latar Belakang
+Anemia menyebabkan berkurangnya oksigenasi otak, yang memengaruhi metabolisme sel dan perkembangan intelektual. Penelitian menunjukkan prevalensi tinggi anemia pada siswi sekolah menengah, seperti 46,7% pada siswi SMP N 12 Yogyakarta, di mana 66,4% mengalami prestasi belajar tidak tuntas. Faktor penyebab utama meliputi asupan zat besi rendah, vitamin B12, dan asam folat, yang krusial untuk pembentukan sel darah merah.
+
+Mekanisme Patofisiologi
+Rendahnya hemoglobin menghambat transportasi oksigen, mengurangi laju metabolisme sel otak dan menimbulkan kesulitan konsentrasi serta pemrosesan informasi. Hal ini berdampak pada penurunan produktivitas belajar dan perkembangan psikomotor. Studi cross-sectional menemukan hubungan signifikan dengan uji Chi-Square (p < 0,001), membuktikan anemia sebagai determinan prestasi akademik rendah.
+
+Bukti dari Penelitian
+Beberapa studi di Indonesia menegaskan korelasi anemia dengan prestasi belajar. Pada siswi SMAN I Abiansemal, hubungan lemah namun tidak signifikan (p=0,091), sementara di sekolah lain seperti Baitul Hikmah, korelasi lemah dengan p=0,005. Sebanyak 61,5% siswi anemic cenderung gagal mencapai standar akademik.
+
+Pencegahan dan Rekomendasi
+Peningkatan konsumsi makanan sumber zat besi serta kepatuhan konsumsi Tablet Tambah Darah (TTD) sangat disarankan untuk menjaga kesehatan dan prestasi belajar remaja.`,
         category: "Edukasi",
         imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80"
       },
       {
-        title: "Mitos dan Fakta seputar TTD",
-        excerpt: "Apakah TTD bikin gemuk? Cek faktanya di sini.",
-        content: "Banyak mitos beredar tentang Tablet Tambah Darah, padahal...",
+        title: "Mitos dan Fakta Seputar TTD",
+        excerpt: "Tablet Tambah Darah (TTD) merupakan suplemen zat besi yang direkomendasikan untuk mencegah and mengatasi anemia, terutama pada remaja putri.",
+        content: `Tablet Tambah Darah (TTD) merupakan suplemen zat besi yang direkomendasikan untuk mencegah dan mengatasi anemia, terutama pada remaja putri dan ibu hamil di Indonesia. Anemia memengaruhi sekitar 48,9% remaja dan 37,1% ibu hamil menurut data Riskesdas 2018, sering kali disebabkan oleh kekurangan zat besi akibat menstruasi or asupan gizi rendah.
+
+Pengertian Anemia dan Peran TTD
+Anemia didefinisikan sebagai kondisi di mana jumlah sel darah merah atau hemoglobin di bawah normal, menyebabkan oksigenasi jaringan terganggu. TTD mengandung zat besi, folat, dan vitamin lain yang membantu sintesis hemoglobin, dengan rekomendasi satu tablet per minggu untuk remaja putri.
+
+Mitos Umum Seputar TTD
+Banyak mitos menghambat penggunaan TTD, seperti anggapan bahwa TTD adalah obat biasa yang berbahaya jika dikonsumsi rutin. Mitos lain menyatakan konsumsi TTD menyebabkan tinja hitam permanen atau membuat bayi lahir besar, padahal efek samping seperti tinja hitam bersifat sementara dan tidak memengaruhi ukuran bayi. Selain itu, dipercaya TTD hanya untuk wanita, padahal pria, anak, dan lansia juga rentan anemia.
+
+Fakta Ilmiah TTD
+TTD bukan obat, melainkan suplemen aman yang meningkatkan kadar hemoglobin jika dikonsumsi tepat waktu, terbukti menurunkan prevalensi anemia pada kelompok target. Konsumsi bersamaan dengan teh atau kopi memang menghambat penyerapan zat besi, sehingga disarankan diminum setelah makan dengan vitamin C untuk optimalisasi.
+
+Dampak dan Rekomendasi
+Anemia yang diabaikan dapat menyebabkan gangguan kesehatan jangka panjang. Rutin mengonsumsi TTD sesuai anjuran tenaga medis adalah langkah preventif yang sangat efektif.`,
         category: "Mitos/Fakta",
         imageUrl: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80"
+      },
+      {
+        title: "Pentingnya Zat Besi untuk Remaja",
+        excerpt: "Zat besi merupakan mineral esensial yang krusial bagi remaja untuk mencegah anemia dan mendukung pertumbuhan optimal.",
+        content: `Zat besi merupakan mineral esensial yang krusial bagi remaja untuk mencegah anemia dan mendukung pertumbuhan optimal. Kekurangan zat besi sering menjadi penyebab utama anemia pada usia ini, yang dapat mengganggu konsentrasi belajar dan aktivitas sehari-hari.
+
+Peran Zat Besi dalam Tubuh
+Zat besi berfungsi utama dalam pembentukan hemoglobin, protein di sel darah merah yang mengangkut oksigen ke seluruh tubuh. Pada remaja, kebutuhan zat besi meningkat drastis akibat pertumbuhan cepat, terutama pada remaja putri yang mengalami menstruasi. Selain itu, zat besi mendukung produksi mioglobin untuk suplai oksigen ke otot serta meningkatkan sistem kekebalan tubuh.
+
+Risiko Anemia pada Remaja
+Anemia akibat defisiensi zat besi menyebabkan gejala seperti kelelahan, pusing, penurunan konsentrasi, dan imunitas lemah. Remaja putri berisiko lebih tinggi karena kehilangan darah menstruasi dan pola makan tidak seimbang, sementara remaja laki-laki juga rentan saat masa pubertas.
+
+Kebutuhan Harian Zat Besi
+Remaja perempuan usia 13-18 tahun membutuhkan sekitar 15-26 mg zat besi per hari, lebih tinggi daripada laki-laki yang sekitar 11 mg. Sumber makanan kaya zat besi meliputi daging merah, hati, bayam, kacang-kacangan, dan sereal yang difortifikasi. Kombinasikan dengan vitamin C dari jeruk atau tomat untuk penyerapan optimal.
+
+Cara Mencegah Kekurangan Zat Besi
+Penuhi asupan melalui pola makan seimbang dan periksa kesehatan rutin untuk deteksi dini anemia. Suplementasi tablet zat besi direkomendasikan untuk kelompok berisiko tinggi, seperti program pemerintah untuk remaja putri.`,
+        category: "Nutrisi",
+        imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
       }
     ];
 
