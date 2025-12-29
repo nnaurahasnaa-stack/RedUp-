@@ -28,6 +28,10 @@ export default function AuthPage({ mode = "login" }: { mode?: "login" | "registe
   const { login, register, user } = useAuth();
   const [, setLocation] = useLocation();
 
+  function onRegisterSuccess() {
+    setLocation("/login");
+  }
+
   // If already logged in, redirect
   if (user) {
     setLocation("/dashboard");
@@ -40,7 +44,7 @@ export default function AuthPage({ mode = "login" }: { mode?: "login" | "registe
         {mode === "login" ? (
           <LoginForm login={login} />
         ) : (
-          <RegisterForm register={register} />
+          <RegisterForm register={register} onSuccess={onRegisterSuccess} />
         )}
       </div>
     </div>
@@ -112,7 +116,7 @@ function LoginForm({ login }: { login: any }) {
   );
 }
 
-function RegisterForm({ register }: { register: any }) {
+function RegisterForm({ register, onSuccess }: { register: any, onSuccess: () => void }) {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -131,7 +135,7 @@ function RegisterForm({ register }: { register: any }) {
     const { confirmPassword, ...data } = values;
     register.mutate(data, {
       onSuccess: () => {
-        setLocation("/login");
+        onSuccess();
       }
     });
   }
