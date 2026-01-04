@@ -99,6 +99,9 @@ export function InstallPrompt() {
     return null;
   }
 
+  // Instruksi manual jika event tidak tersedia
+  const showManualInstructions = !deferredPrompt && !isIOS;
+
   return (
     <div className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg">
       <div className="container max-w-7xl mx-auto px-4 py-4">
@@ -110,6 +113,17 @@ export function InstallPrompt() {
                 {isIOS ? 'Tambahkan RedUp ke Home Screen' : 'Instal RedUp sebagai aplikasi'}
               </p>
               <p className="text-xs md:text-sm opacity-90 truncate">Akses lebih cepat dan bekerja offline</p>
+              {showManualInstructions && (
+                <div className="mt-2 text-xs text-white/90">
+                  <b>Cara install di Chrome:</b> Klik <b>menu ⋮</b> di kanan atas browser &gt; pilih <b>Install App</b> atau <b>Add to Home Screen</b>.<br />
+                  Jika tidak muncul, pastikan sudah menggunakan Chrome versi terbaru dan bukan mode incognito.
+                </div>
+              )}
+              {isIOS && (
+                <div className="mt-2 text-xs text-white/90">
+                  <b>Cara install di iOS:</b> Tap <b>Share</b> &gt; <b>Add to Home Screen</b> &gt; <b>Add</b>.
+                </div>
+              )}
             </div>
           </div>
 
