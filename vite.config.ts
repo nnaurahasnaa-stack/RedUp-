@@ -11,9 +11,11 @@ export default defineConfig({
     runtimeErrorOverlay(),
     VitePWA({
       registerType: 'autoUpdate',
-      strategies: 'injectManifest',
+      strategies: 'generateSW',
       srcDir: 'src',
       filename: 'sw.ts',
+      injectRegister: 'auto',
+      includeAssets: ['**/*.{js,css,html,svg,png,ico,txt,woff,woff2,ttf,eot}'],
       manifest: {
         name: 'RedUp - Edukasi Anemia',
         short_name: 'RedUp',
@@ -25,15 +27,15 @@ export default defineConfig({
         start_url: '/RedUp-/',
         icons: [
           {
-            src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect fill="%23FF6B6B" width="192" height="192"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="80" font-weight="bold" fill="white" font-family="system-ui">R</text></svg>',
+            src: '/RedUp-/favicon.png',
             sizes: '192x192',
-            type: 'image/svg+xml',
+            type: 'image/png',
             purpose: 'any'
           },
           {
-            src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect fill="%23FF6B6B" width="512" height="512"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="200" font-weight="bold" fill="white" font-family="system-ui">R</text></svg>',
+            src: '/RedUp-/favicon.png',
             sizes: '512x512',
-            type: 'image/svg+xml',
+            type: 'image/png',
             purpose: 'any maskable'
           }
         ],
@@ -44,34 +46,6 @@ export default defineConfig({
             sizes: '540x720',
             form_factor: 'narrow',
             type: 'image/svg+xml'
-          }
-        ]
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,txt}'],
-        maximumFileSizeToCacheInBytes: 5000000,
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/www\.youtube\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'youtube-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 7
-              }
-            }
-          },
-          {
-            urlPattern: /^https:\/\/api\..*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 5
-              }
-            }
           }
         ]
       },

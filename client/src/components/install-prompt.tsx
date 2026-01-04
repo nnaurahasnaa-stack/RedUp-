@@ -6,11 +6,16 @@ export function InstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
     // Check if app is running in PWA mode
     const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
                   (window.navigator as any).standalone === true;
+
+    // Check if iOS
+    const iosCheck = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    setIsIOS(iosCheck);
 
     // Check if already dismissed or installed
     const isDismissed = localStorage.getItem('redup-install-dismissed');
@@ -23,9 +28,10 @@ export function InstallPrompt() {
     setIsInstalled(!!isInstalledFlag);
 
     // Listen for beforeinstallprompt event
-    const handleBeforeInstallPrompt = (e: any) => {
+    const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      console.log('beforeinstallprompt event fired', e);
       if (!isPWA && !isDismissed && !isInstalledFlag) {
         setShowPrompt(true);
       }
@@ -33,6 +39,7 @@ export function InstallPrompt() {
 
     // Listen for app installed event
     const handleAppInstalled = () => {
+      console.log('App installed');
       setShowPrompt(false);
       localStorage.setItem('redup-installed', 'true');
       setIsInstalled(true);
@@ -41,24 +48,45 @@ export function InstallPrompt() {
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
 
+    // Fallback: Show prompt even without beforeinstallprompt event in some browsers
+    const timer = setTimeout(() => {
+      if (!isPWA && !isDismissed && !isInstalledFlag && !showPrompt) {
+        console.log('Fallback: showing install prompt');
+        setShowPrompt(true);
+      }
+    }, 1000);
+
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
+      clearTimeout(timer);
     };
   }, []);
 
   const handleInstall = async () => {
+    console.log('Install clicked, deferredPrompt:', deferredPrompt);
+    
     if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
-        localStorage.setItem('redup-installed', 'true');
-        setIsInstalled(true);
+      try {
+        (deferredPrompt as any).prompt();
+        const { outcome } = await (deferredPrompt as any).userChoice;
+        
+        console.log('Install outcome:', outcome);
+        if (outcome === 'accepted') {
+          localStorage.setItem('redup-installed', 'true');
+          setIsInstalled(true);
+        }
+        
+        setDeferredPrompt(null);
+        setShowPrompt(false);
+      } catch (error) {
+        console.error('Install error:', error);
       }
-      
-      setDeferredPrompt(null);
-      setShowPrompt(false);
+    } else if (isIOS) {
+      // Show iOS instruction
+      alert('Untuk iOS:\n1. Tap Share\n2. Tap "Add to Home Screen"\n3. Tap "Add"');
+    } else {
+      alert('Install tidak tersedia di browser Anda. Coba gunakan Chrome atau Edge.');
     }
   };
 
@@ -78,7 +106,9 @@ export function InstallPrompt() {
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <Download className="w-5 h-5 flex-shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-sm md:text-base">Instal RedUp sebagai aplikasi</p>
+              <p className="font-semibold text-sm md:text-base">
+                {isIOS ? 'Tambahkan RedUp ke Home Screen' : 'Instal RedUp sebagai aplikasi'}
+              </p>
               <p className="text-xs md:text-sm opacity-90 truncate">Akses lebih cepat dan bekerja offline</p>
             </div>
           </div>
@@ -89,7 +119,7 @@ export function InstallPrompt() {
               size="sm"
               className="bg-white text-red-600 hover:bg-gray-100 font-semibold"
             >
-              Instal
+              {isIOS ? 'Instruksi' : 'Instal'}
             </Button>
             <button
               onClick={handleDismiss}
