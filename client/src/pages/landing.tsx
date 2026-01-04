@@ -1,11 +1,15 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { InstallPrompt } from "@/components/install-prompt";
 import { motion } from "framer-motion";
 import { HeartPulse, ShieldCheck, Brain, ArrowRight } from "lucide-react";
 
 export default function Landing() {
   return (
     <div className="flex flex-col">
+      {/* Install Prompt Banner */}
+      <InstallPrompt />
+
       {/* Hero Section */}
       <section className="py-12 md:py-24 lg:py-32 flex flex-col md:flex-row items-center gap-12 text-center md:text-left">
         <div className="flex-1 space-y-8">

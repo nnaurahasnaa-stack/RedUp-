@@ -26,7 +26,9 @@ export function InstallPrompt() {
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowPrompt(true);
+      if (!isPWA && !isDismissed && !isInstalledFlag) {
+        setShowPrompt(true);
+      }
     };
 
     // Listen for app installed event
@@ -70,65 +72,34 @@ export function InstallPrompt() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 max-w-sm">
-      <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl shadow-2xl overflow-hidden border border-red-400/30">
-        <div className="p-6 text-white">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Download className="w-5 h-5 flex-shrink-0" />
-              <h3 className="font-bold text-lg">Instal RedUp</h3>
+    <div className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg">
+      <div className="container max-w-7xl mx-auto px-4 py-4">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <Download className="w-5 h-5 flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-sm md:text-base">Instal RedUp sebagai aplikasi</p>
+              <p className="text-xs md:text-sm opacity-90 truncate">Akses lebih cepat dan bekerja offline</p>
             </div>
+          </div>
+
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Button
+              onClick={handleInstall}
+              size="sm"
+              className="bg-white text-red-600 hover:bg-gray-100 font-semibold"
+            >
+              Instal
+            </Button>
             <button
               onClick={handleDismiss}
-              className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+              className="p-1 hover:bg-white/20 rounded-lg transition-colors flex-shrink-0"
               aria-label="Tutup"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
-
-          {/* Description */}
-          <p className="text-sm opacity-95 mb-4">
-            Akses RedUp lebih cepat seperti aplikasi native. Bekerja offline dan kirim notifikasi penting!
-          </p>
-
-          {/* Features */}
-          <div className="space-y-2 mb-4 text-xs opacity-90">
-            <div className="flex items-center gap-2">
-              <span className="text-lg">⚡</span>
-              <span>Akses instan dari home screen</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg">🔗</span>
-              <span>Bekerja tanpa internet</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg">📱</span>
-              <span>Pengalaman seperti aplikasi native</span>
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex gap-2">
-            <Button
-              onClick={handleInstall}
-              className="flex-1 bg-white text-red-600 hover:bg-gray-100 font-semibold"
-            >
-              Instal Sekarang
-            </Button>
-            <Button
-              onClick={handleDismiss}
-              variant="ghost"
-              className="flex-1 text-white hover:bg-white/20 border border-white/30"
-            >
-              Nanti
-            </Button>
-          </div>
         </div>
-
-        {/* Progress bar animation */}
-        <div className="h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"></div>
       </div>
     </div>
   );
