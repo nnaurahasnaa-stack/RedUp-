@@ -2,18 +2,23 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth, type LoginInput, type RegisterInput } from "@/hooks/use-auth";
 import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { insertUserSchema } from "@shared/schema";
 import { Loader2 } from "lucide-react";
 
 // Extend the schema for the form validation specifically
-const registerSchema = insertUserSchema.extend({
-  confirmPassword: z.string()
+const registerSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string(),
+  fullName: z.string().min(1, "Full name is required"),
+  email: z.string().email("Invalid email address"),
+  age: z.number().min(10).max(120),
+  gender: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -96,6 +101,9 @@ function LoginForm({ login }: { login: any }) {
                 </FormItem>
               )}
             />
+            <div className="text-xs text-muted-foreground">
+              Demo: username: <strong>demo</strong>, password: <strong>demo123</strong>
+            </div>
             <Button 
               type="submit" 
               className="w-full h-11 text-base mt-4 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all" 
@@ -126,14 +134,14 @@ function RegisterForm({ register, onSuccess }: { register: any, onSuccess: () =>
       fullName: "",
       email: "",
       age: 15,
-      gender: "Laki-laki"
+      gender: "Perempuan"
     },
   });
 
   function onSubmit(values: z.infer<typeof registerSchema>) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...data } = values;
-    register.mutate(data, {
+    register.mutate(data as RegisterInput, {
       onSuccess: () => {
         onSuccess();
       }

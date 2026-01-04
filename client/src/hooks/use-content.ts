@@ -1,24 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "@shared/routes";
+import { QUESTIONS, ARTICLES } from "@/lib/data";
+import type { Question, Article } from "@shared/schema";
 
 export function useQuestions() {
   return useQuery({
-    queryKey: [api.questions.list.path],
+    queryKey: ["questions"],
     queryFn: async () => {
-      const res = await fetch(api.questions.list.path);
-      if (!res.ok) throw new Error("Failed to fetch questions");
-      return api.questions.list.responses[200].parse(await res.json());
+      // Return local data
+      return QUESTIONS;
     },
   });
 }
 
 export function useArticles() {
   return useQuery({
-    queryKey: [api.articles.list.path],
+    queryKey: ["articles"],
     queryFn: async () => {
-      const res = await fetch(api.articles.list.path);
-      if (!res.ok) throw new Error("Failed to fetch articles");
-      return api.articles.list.responses[200].parse(await res.json());
+      // Return local data
+      return ARTICLES;
     },
   });
 }
+

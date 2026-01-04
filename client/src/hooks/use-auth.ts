@@ -1,42 +1,57 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api, type LoginInput, type RegisterInput } from "@shared/routes";
 import { useToast } from "@/hooks/use-toast";
+import {
+  getCurrentUser,
+  setCurrentUser,
+  getUserByUsername,
+  verifyPassword,
+  saveUser,
+  hashPassword,
+  initializeStorage,
+} from "@/lib/data";
+import type { User } from "@shared/schema";
+
+export interface LoginInput {
+  username: string;
+  password: string;
+}
+
+export interface RegisterInput {
+  username: string;
+  password: string;
+  fullName: string;
+  email: string;
+  gender: string;
+  age: number;
+}
+
+const AUTH_QUERY_KEY = ["auth", "user"];
 
 export function useAuth() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
+  // Initialize storage on first load
+  initializeStorage();
+
   const userQuery = useQuery({
-    queryKey: [api.auth.me.path],
-    queryFn: async () => {
-      const res = await fetch(api.auth.me.path);
-      if (res.status === 401) return null;
-      if (!res.ok) throw new Error("Failed to fetch user");
-      return await res.json();
+    queryKey: AUTH_QUERY_KEY,
+    queryFn: () => {
+      return getCurrentUser();
     },
   });
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginInput) => {
-      const res = await fetch(api.auth.login.path, {
-        method: api.auth.login.method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
-
-      if (!res.ok) {
-        // Try to parse error message
-        try {
-          const error = await res.json();
-          throw new Error(error.message || "Login failed");
-        } catch (e) {
-          throw new Error("Invalid username or password");
-        }
+      const user = getUserByUsername(credentials.username);
+      if (!user || !verifyPassword(credentials.password, user.password)) {
+        throw new Error("Invalid username or password");
       }
-      return await res.json();
+      return user;
     },
     onSuccess: (user) => {
-      queryClient.setQueryData([api.auth.me.path], user);
+      setCurrentUser(user);
+      queryClient.setQueryData(AUTH_QUERY_KEY, user);
       toast({
         title: "Welcome back!",
         description: `Successfully logged in as ${user.username}`,
@@ -53,28 +68,23 @@ export function useAuth() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterInput) => {
-      const res = await fetch(api.auth.register.path, {
-        method: api.auth.register.method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) {
-         try {
-          const error = await res.json();
-          throw new Error(error.message || "Registration failed");
-        } catch (e) {
-           throw new Error("Failed to register");
-        }
+      const existing = getUserByUsername(data.username);
+      if (existing) {
+        throw new Error("Username already exists");
       }
-      return await res.json();
+      const newUser: User = {
+        id: 0,
+        username: data.username,
+        password: hashPassword(data.password),
+        fullName: data.fullName,
+        email: data.email,
+        gender: data.gender,
+        age: data.age,
+      };
+      return saveUser(newUser);
     },
     onSuccess: (user) => {
-      // Auto login after register usually, or just redirect. 
-      // Assuming the backend logs them in or we redirect to login.
-      // For this app flow, we might want to automatically log them in or ask them to login.
-      // Let's assume we redirect to login, but for better UX, let's treat it as success.
-      queryClient.setQueryData([api.auth.me.path], null);
+      queryClient.setQueryData(AUTH_QUERY_KEY, null);
       toast({
         title: "Account Created",
         description: "Please log in with your new credentials.",
@@ -91,13 +101,12 @@ export function useAuth() {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch(api.auth.logout.path, {
-        method: api.auth.logout.method,
-      });
-      if (!res.ok) throw new Error("Logout failed");
+      // Client-side logout
+      return Promise.resolve();
     },
     onSuccess: () => {
-      queryClient.setQueryData([api.auth.me.path], null);
+      setCurrentUser(null);
+      queryClient.setQueryData(AUTH_QUERY_KEY, null);
       toast({
         title: "Logged Out",
         description: "See you next time!",
