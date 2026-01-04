@@ -54,7 +54,7 @@ export default function Dashboard() {
                <iframe 
                  width="100%" 
                  height="100%" 
-                 src="https://www.youtube.com/embed/5s825yC9QnI?si=J2d4pQG5s825yC9" 
+                 src="https://www.youtube.com/embed/o3LHWkbbU6M" 
                  title="YouTube video player" 
                  frameBorder="0" 
                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -62,9 +62,9 @@ export default function Dashboard() {
                ></iframe>
             </div>
             <div className="bg-white p-6 rounded-2xl border border-border/50">
-              <h3 className="text-xl font-bold mb-2">Pentingnya Menjaga Kesehatan Reproduksi</h3>
+              <h3 className="text-xl font-bold mb-2">Memahami Anemia dan Pencegahannya</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Video ini menjelaskan dasar-dasar kesehatan reproduksi bagi remaja, pentingnya menjaga kebersihan, dan bagaimana mencegah penyakit menular. Tonton sampai habis untuk mendapatkan pemahaman yang lengkap sebelum mengerjakan kuis.
+                Video tersebut menjelaskan tentang anemia, yaitu kondisi ketika tubuh kekurangan sel darah merah atau hemoglobin sehingga kemampuan darah membawa oksigen menurun. Anemia dapat disebabkan oleh kekurangan zat besi, vitamin (seperti B12 dan asam folat), kehilangan darah, atau penyakit tertentu. Gejala yang umum dirasakan antara lain mudah lelah, lemas, pusing, wajah pucat, dan sulit berkonsentrasi. Video ini bertujuan memberi pemahaman dasar tentang pengertian, penyebab, dan dampak anemia bagi kesehatan agar masyarakat lebih sadar pentingnya pencegahan dan penanganan anemia.
               </p>
             </div>
           </div>
