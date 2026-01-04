@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LayoutShell } from "@/components/layout-shell";
 import { ThemeProvider } from "@/components/theme-provider";
+import { InstallPrompt } from "@/components/install-prompt";
 
 import Landing from "@/pages/landing";
 import AuthPage from "@/pages/auth-page";
@@ -46,6 +47,7 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="redup-theme">
         <TooltipProvider>
           <Router />
+          <InstallPrompt />
           <Toaster />
         </TooltipProvider>
       </ThemeProvider>
