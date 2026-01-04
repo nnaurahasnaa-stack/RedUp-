@@ -20,11 +20,11 @@ export default function Landing() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
               <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-              Platform Edukasi Kesehatan #1
+              Edukasi Anemia Remaja
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-display tracking-tight text-foreground leading-[1.1]">
-              Kesehatan Remaja <br />
-              <span className="text-primary">Masa Depan Bangsa</span>
+              Kenali <span className="text-primary">Anemia</span> <br />
+              Cegah Sejak Dini
             </h1>
           </motion.div>
           
@@ -34,7 +34,7 @@ export default function Landing() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xl text-muted-foreground max-w-2xl leading-relaxed"
           >
-            RedUp membantu remaja memahami kesehatan reproduksi dengan cara yang menyenangkan, interaktif, dan mudah dipahami.
+            Anemia adalah kondisi ketika tubuh kekurangan sel darah merah atau hemoglobin sehingga kemampuan darah membawa oksigen menurun. Gejala umum: mudah lelah, lemas, pusing, wajah pucat, dan sulit konsentrasi. Yuk, pelajari penyebab, dampak, dan cara pencegahannya agar remaja Indonesia tetap sehat dan berprestasi!
           </motion.p>
           
           <motion.div 
@@ -69,7 +69,7 @@ export default function Landing() {
              <div className="grid grid-cols-2 gap-8">
                <div className="bg-red-50 p-6 rounded-2xl flex flex-col items-center gap-3 shadow-sm transform -rotate-6 hover:rotate-0 transition-transform duration-300">
                  <HeartPulse className="w-16 h-16 text-primary" />
-                 <span className="font-bold text-foreground">Kesehatan Fisik</span>
+                 <span className="font-bold text-foreground">Ciri & Gejala</span>
                </div>
                <div className="bg-blue-50 p-6 rounded-2xl flex flex-col items-center gap-3 shadow-sm transform rotate-6 hover:rotate-0 transition-transform duration-300 translate-y-8">
                  <ShieldCheck className="w-16 h-16 text-blue-500" />
@@ -77,7 +77,11 @@ export default function Landing() {
                </div>
                <div className="bg-green-50 p-6 rounded-2xl flex flex-col items-center gap-3 shadow-sm transform rotate-3 hover:rotate-0 transition-transform duration-300 -translate-y-4">
                  <Brain className="w-16 h-16 text-green-500" />
-                 <span className="font-bold text-foreground">Edukasi Mental</span>
+                 <span className="font-bold text-foreground">Dampak Anemia</span>
+               </div>
+               <div className="bg-yellow-50 p-6 rounded-2xl flex flex-col items-center gap-3 shadow-sm transform -rotate-3 hover:rotate-0 transition-transform duration-300 translate-y-4">
+                 <ShieldCheck className="w-16 h-16 text-yellow-500" />
+                 <span className="font-bold text-foreground">Nutrisi & Zat Besi</span>
                </div>
              </div>
           </div>
